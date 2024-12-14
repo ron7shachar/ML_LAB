@@ -35,8 +35,6 @@ class Number_classification(Lab_dataset):
         self.data_train = datasets.MNIST(root='./lab/data/data_storage', train=True, download=True)
         self.data_test = datasets.MNIST(root='./lab/data/data_storage', train=False, download=True)
         super().__init__("number classification",*inputs)
-        self.tensorboard["image"] = []
-        self.set_images()
 
         self.set_properties()
 
@@ -55,9 +53,7 @@ class Number_classification(Lab_dataset):
         information.test_length = self.data_test_data.shape[0]
 
 
-    def set_images(self):
-        img_grid = torchvision.utils.make_grid( self.data_train.data[:64].unsqueeze(1))
-        self.tensorboard["image"].append(('mnist_images', img_grid))
+
 
     def set_properties(self):
         self.data_train_data = self.data_train.data
@@ -92,6 +88,9 @@ class Number_classification(Lab_dataset):
         information.train_data_shape = self.data_train.data[0].shape
         information.train_labels_shape = self.data_train.targets.unsqueeze(1)[0].shape
         information.test_length = self.data_test.data.shape[0]
+
+        img_grid = torchvision.utils.make_grid(self.data_train.data[:64].unsqueeze(1))
+        self._append_image('mnist_images',img_grid)
 
         information.for_loss_target_type = "index"
 data_table = {"number_classification": Number_classification}

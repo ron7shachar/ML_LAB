@@ -12,11 +12,11 @@ class Main():
     def __init__(self,data,layers,loss):
         information = Information()
         data = get_data(data,information)
-        layers = get_layers(layers,information)
-        loss = get_loss(loss,information)
-        classAdapter = ClassAdapter(information)
+        get_layers(layers,information)
+        get_loss(loss,information)
+        ClassAdapter(information)
         model = Model(information)
-        model.fit(data.data_train,1,1,0.3)
+        model.fit(data.data_train,10,1,0.01)
         information.to_tensorboard()
 
 
@@ -24,7 +24,8 @@ class Main():
 data = "number_classification"
 layers = ["Reshape",[784],"Linear",[24],"Sigmoid","Linear",[10],"Sigmoid"]
 loss = "MSELoss"
-Main("number_classification",layers,loss)
+fit_parameters = ()
+Main("number_classification",layers,loss,)
 
 
 
